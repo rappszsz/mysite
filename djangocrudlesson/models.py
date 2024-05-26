@@ -10,6 +10,11 @@ class Gender(models.Model):
 
     class Meta:
         db_table = 'genders'
+        
+    
+    def __str__(self):
+        return self.gender
+    
 
 class User(models.Model):
     user_id = models.BigAutoField(primary_key=True, blank=False) #BIGHINT NOT NULL AUTO_INCREMENT PRIMARY KEY
