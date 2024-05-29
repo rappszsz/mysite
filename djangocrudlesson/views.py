@@ -80,6 +80,33 @@ def create_user(request):
     
     return render(request, 'user/create.html', context)
 
+
+def show_user(request, user_id):
+    user = User.objects.get(pk=user_id)
+    
+    context = {
+        'user': user,
+    }
+
+    return render(request, 'user/show.html', context)
+
+def edit_user(request, user_id):
+    user = request.POST.get('user')
+    
+    User.objects.filter(pk=user_id).update(user=user) 
+    messages.success(request, 'Gender successfully updated')
+    
+    return redirect('/')
+
+def update_user(request, user_id):
+    userVal = request.POST.get('user')
+    
+    user = User.objects.get(pk=user_id)
+    user.update(first_name=userVal)(middle_name=userVal)(last_name=userVal)(gender=userVal)
+    
+    messages.success(request, 'User Successfully Updated')
+    return redirect('/')
+
 def store_user(request):
     firstName = request.POST.get('first_name')
     middleName = request.POST.get('middle_name')
@@ -100,7 +127,7 @@ def store_user(request):
         
         messages.success(request, 'User Successfully Saved!')
         
-        return redirect('/users')
+        return redirect('/')
     else:
         messages.error(request, 'Password does not match.')
         return redirect('/users/create')

@@ -9,8 +9,11 @@ urlpatterns = [
     path('gender/edit/<int:gender_id>', views.edit_gender),
     path('gender/update/<int:gender_id>', views.update_gender),
     path('gender/delete/<int:gender_id>', views.delete_gender),
+    path('user/show/<int:user_id>', views.show_user),
+    path('user/edit/<int:user_id>', views.edit_user),
+    path('user/update/<int:user_id>', views.update_user),
     path('genders/destroy/<int:gender_id>', views.destroy_gender),
-    path('users', views.index_user),
+    path('', views.index_user),
     path('users/create', views.create_user),
     path('user/store', views.store_user),
     
