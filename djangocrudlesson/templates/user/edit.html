@@ -1,21 +1,38 @@
-{% extends "layout/base.html" %}
+    {% extends "layout/base.html" %}
 
-{% block title %} 
-Edit User
-{% endblock title %}
+    {% block title %} 
+    Edit User
+    {% endblock title %}
 
-{% block content %}
+    {% block content %}
 
-<div class="col-md-4 mx-auto mt-3">
-    <form action="/user/update/ {{ user.user_id }}" method="post">
-        {% csrf_token %}
-        <div class="mb-3">
-            <label for="user">User</label>
-            <input type="text" class="form-control" id="user" name="user" value="{{ user.first_name }} {{ user.middle_name }} {{ user.last_name }} {{ user.gender }}" />
-        </div>
-        <button type="submit" class="btn btn-success float-end col-12 col-md-4">Update Gender</button>
-        <a href="/" class="btn btn-secondary float-end col-12 col-md-4">Back</a>
-    </form>
-</div>
+    <div class="col-md-4 mx-auto mt-3">
+        <form action="/user/update/{{ user.user_id }}" method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="userID">User ID</label>
+                <input type="text" class="form-control" id="userID" name="userID" value=" {{ user.user_id }}" />
+                <label for="firstName">First Name</label>
+                <input type="text" class="form-control" id="firstName" name="firstName" value=" {{ user.first_name }}" />
+                <label for="middleName">Middle Name</label>
+                <input type="text" class="form-control" id="middleName" name="middleName" value=" {{ user.middle_name }}" />
+                <label for="lastName">Last Name</label>
+                <input type="text" class="form-control" id="lastName" name="lastName" value=" {{ user.last_name }}" />
+            <div class="mb-3">
+                <label for="gender_id">Gender</label>
+                <select name="gender_id" id="gender_id" class="form-select">
+                    <option value="">N/A</option>
+                    <option value="{{ user.gender_id }}" select hidden>{{ user.gender }}"</option>
+                    {% for gender in genders %}
+                        <option value="{{gender.gender_id}}" {% if gender.gender_id == user.gender_id%}selected{% endif %}>{{gender.gender}}</option>
+                        {% endfor %}
+                </select>
+            </div>
+        </div>    
+            
+            <button type="submit" class="btn btn-success float-end col-12 col-md-3">Update Gender</button>
+            <a href="/" class="btn btn-secondary float-end col-12 col-md-3 me-1">Back</a>
+        </form>
+    </div>
 
-{% endblock content %}
+    {% endblock content %}

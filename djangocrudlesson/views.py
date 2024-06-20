@@ -60,7 +60,7 @@ def delete_gender(request, gender_id):
 
 def destroy_gender(request, gender_id):
     Gender.objects.filter(pk=gender_id).delete() # DELETE from genders WHERE gender_id = gender_id
-    messages.success(request, 'Gender Successfully Deleted!')
+    messages.success(request, 'User Successfully Deleted!')
     
     return redirect('/genders')
 
@@ -91,20 +91,40 @@ def show_user(request, user_id):
     return render(request, 'user/show.html', context)
 
 def edit_user(request, user_id):
-    user = request.POST.get('user')
+    user = User.objects.get(pk=user_id)
+    genders = Gender.objects.all()
     
-    User.objects.filter(pk=user_id).update(user=user) 
+    context = {
+        'user': user,
+        'genders': genders,
+    }
+    
+    return render(request, 'user/edit.html', context)
+
+def update_user(request, user_id):
+    firstName = request.POST.get('firstName')
+    middleName = request.POST.get('middleName')
+    lastName = request.POST.get('lastName')
+    genderid = request.POST.get('gender_id')
+    username = request.POST.get('username')
+    
+    User.objects.filter(pk=user_id).update(first_name=firstName, middle_name=middleName, last_name=lastName, gender_id=genderid, username=username ) #UPDATE gender SET gender = gender WEHRE gender_id = gender_id
     messages.success(request, 'Gender successfully updated')
     
     return redirect('/')
 
-def update_user(request, user_id):
-    userVal = request.POST.get('user')
+def delete_user(request, user_id):
+    user = User.objects.get(pk=user_id) #SELECT * FROM users WHERE user_id = user_id
     
-    user = User.objects.get(pk=user_id)
-    user.update(first_name=userVal)(middle_name=userVal)(last_name=userVal)(gender=userVal)
+    context = {
+        'user': user,
+    }
     
-    messages.success(request, 'User Successfully Updated')
+    return render(request, 'user/delete.html', context)
+
+def destroy_user(request, user_id):
+    User.objects.filter(pk=user_id).delete() # DELETE from genders WHERE gender_id = gender_id
+    messages.success(request, 'User Successfully Deleted!') 
     return redirect('/')
 
 def store_user(request):
